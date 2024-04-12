@@ -1,0 +1,3 @@
+git+https://github.com/yuce/pyswip@master#egg=pyswip
+Flask==2.2.3
+Werkzeug==2.2.2
