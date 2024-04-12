@@ -19,7 +19,7 @@ restaurant('The Breakfast Club Spitalfields', american, '£10-20', 0.8, [vegetar
 % Askables
 % Define the possible values for each attribute
 cuisine(Cuisine) :- member(Cuisine, [african, american, asian, chinese, seafood, healthy, bakery, mediterranean, convenience]).
-budget(Budget) :- member(Budget, ['1 to 10', '10 to 20', '20 to 30', '30 to 40']).
+budget(Budget) :- member(Budget, ['£1-10', '£10-20', '£20-30', '£30-40']).
 distance(Distance) :- member(Distance, [0.5, 1, 5, 10, 15]).
 dietary_restrictions(Restrictions) :- subset(Restrictions, [vegetarian, vegan, gluten_free]).
 restaurant_type(Type) :- member(Type, [chain, local]).
