@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Recommendation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <script>
+        let restaurants = [];
+        let askedQuestions = [];
+        let answers = {};
+        let restaurantUrls = {
+            "Aso Rock Restaurant": "https://maps.app.goo.gl/K3E12567gyUpviBw6?g_st=it",
+            "Bankes Kitchen": "https://maps.app.goo.gl/fxGegVtLzjb1yZiu6?g_st=it",
+            "T4 Boba": "https://maps.app.goo.gl/XqWGWkgWVnh2BrGv8?g_st=it",
+            "Honest Burgers Old Street": "https://maps.app.goo.gl/wyASjeuwFHFU2UUV9?g_st=it",
+            "Nandos Old Street": "https://maps.app.goo.gl/LuqYpWtRPRpGjoXM8?g_st=it",
+            "The Old Street Chinese Restaurant": "https://maps.app.goo.gl/Ue1zBtD9T419J9mm7?g_st=it",
+            "Danyames Kitchen The Kenny House": "https://maps.app.goo.gl/J2KihAVYdqDgdEru9?g_st=it",
+            "Sea Garden and Grill": "https://maps.app.goo.gl/pAdzFQpcw41JaEdB7?g_st=it",
+            "Cooked by B": "https://maps.app.goo.gl/VYVi9k2Qw4ATiw2b6?g_st=it",
+            "Açaí Berry Wardour St.": "https://maps.app.goo.gl/FXtSUDRicA5LVYM87?g_st=it",
+            "Agege Bread London Bakers": "https://maps.app.goo.gl/95vFJZgsGhcKTxJC6?g_st=it",
+            "The Best Kebab": "https://maps.app.goo.gl/VjhUrWpzSJHGx3Uv9?g_st=it",
+            "Hoxton Grill": "https://maps.app.goo.gl/NJdbvVEYgiTinsaZ8?g_st=it",
+            "The Breakfast Club Spitalfields": "https://maps.app.goo.gl/Y7Fy8SqUzx6s8aU1A?g_st=it"
+        }
+
+        function fetchQuestion() {
+            $.ajax({
+                url: "/question",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    restaurants: restaurants,
+                    askedQuestions: askedQuestions
+                }),
+                success: function(response) {
+                    if (response.question) {
+                        displayQuestion(response.question);
+                    } else {
+                        displayRecommendations(restaurants)
+                    }
+                }
+            });
+        }
+
+        function displayQuestion(question) {
+            $("#question-container").empty().show();
+            $("#recommendation-container").empty().hide();
+
+            let questionText = "";
+            let options = [];
+
+            switch (question) {
+                case "cuisine":
+                    questionText = "What type of cuisine do you prefer?";
+                    options = [
+                        { value: "african", label: "African" },
+                        { value: "american", label: "American" },
+                        { value: "asian", label: "Asian" },
+                        { value: "chinese", label: "Chinese" },
+                        { value: "seafood", label: "Seafood" },
+                        { value: "healthy", label: "Healthy" },
+                        { value: "bakery", label: "Bakery" },
+                        { value: "mediterranean", label: "Mediterranean" },
+                        { value: "convenience", label: "Convenience" }
+                    ];
+                    break;
+                case "budget":
+                    questionText = "What is your budget range?";
+                    options = [
+                        { value: "£1-10", label: "£1-10" },
+                        { value: "£10-20", label: "£10-20" },
+                        { value: "£20-30", label: "£20-30" },
+                        { value: "£30-40", label: "£30-40" }
+                    ];
+                    break;
+                case "distance":
+                    questionText = "How far are you willing to travel (in miles)?";
+                    options = [
+                        { value: "0.5", label: "0.5 miles" },
+                        { value: "1", label: "1 mile" },
+                        { value: "5", label: "5 miles" },
+                        { value: "10", label: "10 miles" },
+                        { value: "15", label: "15 miles" }
+                    ];
+                    break;
+                case "dietary_restrictions":
+                    questionText = "Do you have any dietary restrictions?";
+                    options = [
+                        { value: "vegetarian", label: "Vegetarian" },
+                        { value: "vegan", label: "Vegan" },
+                        { value: "gluten_free", label: "Gluten-free" },
+                        { value: "none", label: "No restrictions" }
+                    ];
+                    break;
+                case "restaurant_type":
+                    questionText = "Do you prefer chain or local restaurants?";
+                    options = [
+                        { value: "chain", label: "Chain" },
+                        { value: "local", label: "Local" }
+                    ];
+                    break;
+                case "food_type":
+                    questionText = "Do you prefer healthy or fast food?";
+                    options = [
+                        { value: "healthy", label: "Healthy" },
+                        { value: "fast_food", label: "Fast food" }
+                    ];
+                    break;
+                case "appetite":
+                    questionText = "Are you looking for a full meal or light snacks?";
+                    options = [
+                        { value: "full", label: "Full meal" },
+                        { value: "light", label: "Light snacks" }
+                    ];
+                    break;
+                case "meal_type":
+                    questionText = "What type of meal are you looking for?";
+                    options = [
+                        { value: "breakfast", label: "Breakfast" },
+                        { value: "lunch", label: "Lunch" },
+                        { value: "dinner", label: "Dinner" },
+                        { value: "snack", label: "Snack" }
+                    ];
+                    break;
+            }
+
+            $("#question-container").append(`<h2>${questionText}</h2>`);
+            options.forEach(function(option) {
+                $("#question-container").append(`
+                    <div>
+                        <input type="radio" name="answer" value="${option.value}" id="${option.value}">
+                        <label for="${option.value}">${option.label}</label>
+                    </div>
+                `);
+            });
+            $("#question-container").append(`<button onclick="submitAnswer('${question}')">Submit</button>`);
+        }
+
+        function submitAnswer(question) {
+            let answer = $("input[name='answer']:checked").val();
+            answers[question] = answer;
+
+            $.ajax({
+                url: "/recommend",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    restaurants: restaurants,
+                    question: question,
+                    answer: answer
+                }),
+                success: function(response) {
+                    displayAnswers();
+                    if (response.recommendation) {
+                        displayRecommendations(response.recommendation);
+                    } else {
+                        restaurants = response.restaurants;
+                        askedQuestions.push(question);
+                        fetchQuestion();
+                    }
+                }
+            });
+        }
+
+        function displayRecommendations(restaurants) {
+            $("#question-container").empty().hide();
+            $("#recommendation-container").empty().show();
+            if (restaurants.length === 0) {
+                $("#recommendation-container").html(`<h2>Recommended Restaurant: <br> <ul><li>No restaurants match your prefernces :( </li></ul></h2>`);
+            } else if (typeof restaurants === "string") {
+                let restaurant = restaurants;
+                let restaurantUrl = restaurantUrls[restaurant];
+                $("#recommendation-container").html(`<h2>Recommended Restaurant: <br> <ul><li><a href="${restaurantUrl}" target="_blank">${restaurant}</a></li></ul></h2>`);
+            } else {
+                let restaurantList = $("<ul>");
+                restaurants.forEach(function(restaurant) {
+                    let restaurantUrl = restaurantUrls[restaurant];
+                    restaurantList.append(`<li><a href="${restaurantUrl}" target="_blank">${restaurant}</a></li>`);
+                });
+                $("#recommendation-container").append("<h2>Recommended Restaurants:</h2>").append(restaurantList);
+            }
+        }
+
+        function displayAnswers() {
+            $("#answers-container").empty().show();
+            for (let question in answers) {
+                $("#answers-container").append(`<p><strong>${getQuestionText(question)}:</strong> ${answers[question]}</p>`);
+            }
+        }
+
+        function getQuestionText(question) {
+            switch (question) {
+                case "cuisine":
+                    return "Preferred Cuisine";
+                case "budget":
+                    return "Budget Range";
+                case "distance":
+                    return "Travel Distance";
+                case "dietary_restrictions":
+                    return "Dietary Restrictions";
+                case "restaurant_type":
+                    return "Restaurant Type";
+                case "food_type":
+                    return "Food Type";
+                case "appetite":
+                    return "Appetite";
+                case "meal_type":
+                    return "Meal Type";
+                default:
+                    return "";
+            }
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "/restaurants",
+                type: "GET",
+                success: function(response) {
+                    restaurants = response.restaurants;
+                    fetchQuestion();
+                }
+            });
+            $("#restart-btn").on("click", function() {
+                location.reload();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Restaurant Recommendation</h1>
+    <div id="question-container"></div>
+    <div id="recommendation-container"></div>
+    <div id="answers-container"></div>
+    <button id="restart-btn">Restart</button>
+    
+</body>
+</html>

@@ -30,7 +30,6 @@ appetite(Appetite) :- member(Appetite, [full, light]).
 meal_type(MealType) :- member(MealType, [breakfast, lunch, dinner, snack]).
 
 % User interaction
-trace.
 recommend_restaurant :-
     write('here'),
     % Find all restaurant names and store them in the Restaurants list
@@ -126,6 +125,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Cuisines, UniqueCuisines),
     % Count the number of unique cuisine values
     length(UniqueCuisines, CuisineCount),
+    write('cuisine length'),
+    write(CuisineCount),
 
     % Find all budget values for the remaining restaurants
     findall(Budget, (member(Name, Restaurants), restaurant(Name, _, Budget, _, _, _, _, _, _)), Budgets),
@@ -134,6 +135,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Budgets, UniqueBudgets),
     % Count the number of unique budget values
     length(UniqueBudgets, BudgetCount),
+    write('budget length'),
+    write(BudgetCount),
 
     % Find all distance values for the remaining restaurants
     findall(Distance, (member(Name, Restaurants), restaurant(Name, _, _, Distance, _, _, _, _, _)),Distances),
@@ -142,6 +145,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Distances, UniqueDistances),
     % Count the number of unique distance values
     length(UniqueDistances, DistanceCount),
+    write('distance length'),
+    write(DistanceCount),
 
     % Find all dietary restriction values for the remaining restaurants
     findall(Restrictions, (member(Name, Restaurants), restaurant(Name, _, _, _, Restrictions, _, _, _, _)), AllRestrictions),
@@ -150,6 +155,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(FlatRestrictions, UniqueRestrictions),
     % Count the number of unique dietary restriction values
     length(UniqueRestrictions, RestrictionsCount),
+    write('restrictions length'),
+    write(RestrictionsCount),
 
     % Find all restaurant types values for the remaining restaurants
     findall(Type, (member(Name, Restaurants), restaurant(Name, _, _, _, _, Type, _, _, _)), Types),
@@ -157,6 +164,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Types, UniqueTypes),
     % Count the number of unique restaurant types values
     length(UniqueTypes, TypeCount),
+    write('rest type length'),
+    write(TypeCount),
 
     % Find all food type values for the remaining restaurants
     findall(FoodType, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, FoodType, _, _)), FoodTypes),
@@ -164,6 +173,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(FoodTypes, UniqueFoodTypes),
     % Count the number of unique food type values
     length(UniqueFoodTypes, FoodTypeCount),
+    write('food type length'),
+    write(FoodTypeCount),
 
     % Find all appetite values for the remaining restaurants
     findall(Appetite, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, _, Appetite, _)),Appetites),
@@ -171,13 +182,19 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Appetites, UniqueAppetites),
     % Count the number of unique appetite values
     length(UniqueAppetites, AppetiteCount),
+    write('appetites length'),
+    write(AppetiteCount),
 
     % Find all meal type values for the remaining restaurants
-    findall(MealType, (member(Name, Restaurants), restaurant(_, _, _, _, _, _, _, _, MealType)), MealTypes),
+    findall(MealType, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, _, _, MealType)), MealTypes),
     % Remove duplicates to get unique meal type values
     list_to_set(MealTypes, UniqueMealTypes),
     % Count the number of unique meal type values
     length(UniqueMealTypes, MealTypeCount),
+    write('meal type length'),
+    write(MealTypes),
+    write(UniqueMealTypes),
+    write(MealTypeCount),
 
     (CuisineCount > 1, \+ member(cuisine, AskedQuestions) ->
         % If there are multiple unique cuisine values and cuisine hasn't been asked, select cuisine as the next question
