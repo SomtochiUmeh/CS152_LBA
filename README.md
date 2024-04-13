@@ -8,8 +8,9 @@ This repository contains an expert system for recommending restaurants based on 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [GUI Demo](#gui-demo)
-  - [CLI Demo](#cli-demo)
+  - [GUI](#gui)
+  - [CLI](#cli)
+  - [Video Demo](#video-demo)
 - [File Structure](#file-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -43,7 +44,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### GUI Demo
+### GUI
 
 1. Start the Flask server:
 
@@ -60,7 +61,7 @@ python app.py
 
 4. The system will provide personalized restaurant recommendations based on your input.
 
-### CLI Demo
+### CLI
 
 1. Start the Prolog interpreter:
 
@@ -87,7 +88,9 @@ cd LBA_group
 5. The system will provide personalized restaurant recommendations based on your input.
 
 ### Video Demo
-[Video demo](gui_cli_demo.mov)
+
+https://github.com/SomtochiUmeh/CS152_LBA/assets/74836691/366aec6f-5090-4f46-bf40-d7739f0dd704
+
 
 ## File Structure
 
