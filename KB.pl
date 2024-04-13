@@ -3,7 +3,7 @@
 % Define the attributes of every restaurant in the knowledge base.
 % Each restaurant is represented by a unique predicate with its name and various attributes such as cuisine type,
 % budget range, distance from the residence hall), dietary restrictions, the type of establishment (chain or local),
-% the type of food (healthy or fast food), the size of the meal (full or light), the meal it caters to (breakfast, lunch, dinner, or snack).
+% the type of food (healthy or fast food), the size of the meal (full or light), the meal it caters to (breakfast, lunch, dinner).
 % This section applies #rightproblem by clearly defining the problem space 
 % and #sourcequality by ensuring each restaurant's attributes are accurately represented.
 
