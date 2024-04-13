@@ -40,9 +40,7 @@ def get_restaurants():
 
 
 # Route to get a question based on previous answers
-app.route("/question", methods=["POST"])
-
-
+@app.route("/question", methods=["POST"])
 def get_question():
     """
     Retrieves a question based on the current state of the conversation.

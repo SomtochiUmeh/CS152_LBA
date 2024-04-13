@@ -64,11 +64,11 @@ meal_type(MealType) :- member(MealType, [breakfast, lunch, dinner]).
 % to progress from a general pool of restaurants to a personalized recommendation.
 
 recommend_restaurant :-
-    write('here'),
+    % write('here'),
     % Retrieve all restaurant names to form the initial pool of choices.
     % Demonstrates effective use of Prolog's findall predicate for initial data collection (#evidencebased).
     findall(Name, restaurant(Name, _, _, _, _, _, _, _, _), Restaurants),
-    write(Restaurants),
+    % write(Restaurants),
     % Initiate the process of refining the restaurant list based on user responses.
     ask_questions(Restaurants, RecommendedRestaurant),
     (RecommendedRestaurant = [] ->
@@ -77,7 +77,7 @@ recommend_restaurant :-
     ;
         write('Based on your preferences, we recommend:'), nl,
         % Write the list of recommended restaurants
-        write(RecommendedRestaurant),
+        % write(RecommendedRestaurant),
         write_restaurant_list(RecommendedRestaurant)
     ).
 
@@ -87,17 +87,17 @@ recommend_restaurant :-
 
 % Base case: If no restaurants left, set RecommendedRestaurant to empty list
 ask_questions(Restaurants, RecommendedRestaurant) :-
-    write('here2'),
-    write(Restaurants),
+    % write('here2'),
+    % write(Restaurants),
     (Restaurants = [] ->
-        write('here3'),
+        % write('here3'),
         RecommendedRestaurant = []
     ;
-        write('here4'),
+        % write('here4'),
         % Select the next question to ask based on the remaining restaurants
         select_question(Restaurants, [], Question),
-        write('asking questions'),
-        write(Question),
+        % write('asking questions'),
+        % write(Question),
         (Question = none ->
             % If no more questions to ask, set RecommendedRestaurant to the remaining restaurants
             RecommendedRestaurant = Restaurants
@@ -105,8 +105,8 @@ ask_questions(Restaurants, RecommendedRestaurant) :-
             % Ask the selected question and get the user's answer
             ask_question(Question, Answer),
             filter_restaurants(Restaurants, Question, Answer, FilteredRestaurants),
-            write('done filtering'),
-            write(FilteredRestaurants),
+            % write('done filtering'),
+            % write(FilteredRestaurants),
             (FilteredRestaurants = [Restaurant] ->
                 % If only one restaurant left, set it as the recommended restaurant
                 RecommendedRestaurant = [Restaurant]
@@ -119,17 +119,17 @@ ask_questions(Restaurants, RecommendedRestaurant) :-
 
 % Recursive case: Ask questions with the updated list of asked questions
 ask_questions(Restaurants, AskedQuestions, RecommendedRestaurant) :-
-    write('here2'),
-    write(Restaurants),
+    % write('here2'),
+    % write(Restaurants),
     (Restaurants = [] ->
-        write('here3'),
+        % write('here3'),
         RecommendedRestaurant = []
     ;
-        write('here4'),
+        % write('here4'),
         % Select the next question based on the remaining restaurants and the asked questions
         select_question(Restaurants, AskedQuestions, Question),
-        write('asking questions'),
-        write(Question),
+        % write('asking questions'),
+        % write(Question),
         (Question = none ->
             % If no more relevant questions to ask, set RecommendedRestaurant to the remaining restaurants
             RecommendedRestaurant = Restaurants
@@ -138,8 +138,8 @@ ask_questions(Restaurants, AskedQuestions, RecommendedRestaurant) :-
             ask_question(Question, Answer),
             % Filter restaurants based on the answer
             filter_restaurants(Restaurants, Question, Answer, FilteredRestaurants),
-            write('done filtering'),
-            write(FilteredRestaurants),
+            % write('done filtering'),
+            % write(FilteredRestaurants),
             (FilteredRestaurants = [Restaurant] ->
                 % If only one restaurant left, set it as the recommended restaurant
                 RecommendedRestaurant = [Restaurant]
@@ -158,37 +158,37 @@ ask_questions(Restaurants, AskedQuestions, RecommendedRestaurant) :-
 
 % Select the next question to ask based on the remaining restaurants and the asked questions
 select_question(Restaurants, AskedQuestions, Question) :-
-    write('here5'),
+    % write('here5'),
     % Find all cuisine values for the remaining restaurants
     findall(Cuisine, (member(Name, Restaurants), restaurant(Name, Cuisine, _, _, _, _, _, _, _)), Cuisines),
-    write(Cuisines),
-    write(Restaurants),
+    % write(Cuisines),
+    % write(Restaurants),
     % Remove duplicates to get unique cuisine values
     list_to_set(Cuisines, UniqueCuisines),
     % Count the number of unique cuisine values
     length(UniqueCuisines, CuisineCount),
-    write('cuisine length'),
-    write(CuisineCount),
+    % write('cuisine length'),
+    % write(CuisineCount),
 
     % Find all budget values for the remaining restaurants
     findall(Budget, (member(Name, Restaurants), restaurant(Name, _, Budget, _, _, _, _, _, _)), Budgets),
-    write(Budgets),
+    % write(Budgets),
     % Remove duplicates to get unique budget values
     list_to_set(Budgets, UniqueBudgets),
     % Count the number of unique budget values
     length(UniqueBudgets, BudgetCount),
-    write('budget length'),
-    write(BudgetCount),
+    % write('budget length'),
+    % write(BudgetCount),
 
     % Find all distance values for the remaining restaurants
     findall(Distance, (member(Name, Restaurants), restaurant(Name, _, _, Distance, _, _, _, _, _)),Distances),
-    write(Distances),
+    % write(Distances),
     % Remove duplicates to get unique distance values
     list_to_set(Distances, UniqueDistances),
     % Count the number of unique distance values
     length(UniqueDistances, DistanceCount),
-    write('distance length'),
-    write(DistanceCount),
+    % write('distance length'),
+    % write(DistanceCount),
 
     % Find all dietary restriction values for the remaining restaurants
     findall(Restrictions, (member(Name, Restaurants), restaurant(Name, _, _, _, Restrictions, _, _, _, _)), AllRestrictions),
@@ -197,8 +197,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(FlatRestrictions, UniqueRestrictions),
     % Count the number of unique dietary restriction values
     length(UniqueRestrictions, RestrictionsCount),
-    write('restrictions length'),
-    write(RestrictionsCount),
+    % write('restrictions length'),
+    % write(RestrictionsCount),
 
     % Find all restaurant types values for the remaining restaurants
     findall(Type, (member(Name, Restaurants), restaurant(Name, _, _, _, _, Type, _, _, _)), Types),
@@ -206,8 +206,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Types, UniqueTypes),
     % Count the number of unique restaurant types values
     length(UniqueTypes, TypeCount),
-    write('rest type length'),
-    write(TypeCount),
+    % write('rest type length'),
+    % write(TypeCount),
 
     % Find all food type values for the remaining restaurants
     findall(FoodType, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, FoodType, _, _)), FoodTypes),
@@ -215,8 +215,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(FoodTypes, UniqueFoodTypes),
     % Count the number of unique food type values
     length(UniqueFoodTypes, FoodTypeCount),
-    write('food type length'),
-    write(FoodTypeCount),
+    % write('food type length'),
+    % write(FoodTypeCount),
 
     % Find all appetite values for the remaining restaurants
     findall(Appetite, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, _, Appetite, _)),Appetites),
@@ -224,8 +224,8 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(Appetites, UniqueAppetites),
     % Count the number of unique appetite values
     length(UniqueAppetites, AppetiteCount),
-    write('appetites length'),
-    write(AppetiteCount),
+    % write('appetites length'),
+    % write(AppetiteCount),
 
     % Find all meal type values for the remaining restaurants
     findall(MealType, (member(Name, Restaurants), restaurant(Name, _, _, _, _, _, _, _, MealType)), MealTypes),
@@ -233,10 +233,10 @@ select_question(Restaurants, AskedQuestions, Question) :-
     list_to_set(MealTypes, UniqueMealTypes),
     % Count the number of unique meal type values
     length(UniqueMealTypes, MealTypeCount),
-    write('meal type length'),
-    write(MealTypes),
-    write(UniqueMealTypes),
-    write(MealTypeCount),
+    % write('meal type length'),
+    % write(MealTypes),
+    % write(UniqueMealTypes),
+    % write(MealTypeCount),
 
     (CuisineCount > 1, \+ member(cuisine, AskedQuestions) ->
         % If there are multiple unique cuisine values and cuisine hasn't been asked, select cuisine as the next question
