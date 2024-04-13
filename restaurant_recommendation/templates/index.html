@@ -23,7 +23,25 @@
             "Agege Bread London Bakers": "https://maps.app.goo.gl/95vFJZgsGhcKTxJC6?g_st=it",
             "The Best Kebab": "https://maps.app.goo.gl/VjhUrWpzSJHGx3Uv9?g_st=it",
             "Hoxton Grill": "https://maps.app.goo.gl/NJdbvVEYgiTinsaZ8?g_st=it",
-            "The Breakfast Club Spitalfields": "https://maps.app.goo.gl/Y7Fy8SqUzx6s8aU1A?g_st=it"
+            "The Breakfast Club Spitalfields": "https://maps.app.goo.gl/Y7Fy8SqUzx6s8aU1A?g_st=it",
+            'Yeye Noodle & Dumpling':"https://maps.app.goo.gl/wG9eEdC7fsrKrWRJ8?g_st=it",
+            'Marugame Udon Liverpool Street':"https://maps.app.goo.gl/bay6dXEh75CgQizK6?g_st=it",
+            'Kung Food (Liverpool Street)':"https://maps.app.goo.gl/hoDarkeKSb6Q2drQ7?g_st=it",
+            'Aburi Japanese Restaurant':"https://maps.app.goo.gl/mGmeRkeLSFTM8CEz6?g_st=it",
+            'Dodam Korea':"https://maps.app.goo.gl/AThHWtWPGAsiDt6Z8?g_st=it",
+            'Ngon Ngon':"https://maps.app.goo.gl/NBo4rf76ahWCEn6a7?g_st=it",
+            'Papelón':"https://maps.app.goo.gl/mAkG3BSCZzdS29Tv8?g_st=it",
+            'Avila London':"https://maps.app.goo.gl/4Yx3iH4cjjxBmH3m8?g_st=it",
+            'Lanzhou Lamian Noodle Bar':"https://maps.app.goo.gl/spbbBWZtm44yEcAx8?g_st=it",
+            'Wok to Walk':"https://maps.app.goo.gl/Q7QWXQog3kqPxzoR8?g_st=it",
+            'Gebeta Ethiopian Kitchen':"https://maps.app.goo.gl/GyWdDoyhbUFNHjubA?g_st=it",
+            'Inca London':"https://maps.app.goo.gl/eXtQxA1C4zocKAaR6?g_st=it",
+            'Tinseltown':"https://maps.app.goo.gl/8PHbHQJEou5CK8v18?g_st=it",
+            'Greek Grill Point':"https://maps.app.goo.gl/bKbGjguud71jrrCt8?g_st=it",
+            'Bengal Tiger':"https://maps.app.goo.gl/sUFUQm9MKzgcMQZP8?g_st=it",
+            'Dishoom':"https://maps.app.goo.gl/QzwYeZZv1Jr7mMrQ8?g_st=it",
+            'Five Guys':"https://maps.app.goo.gl/izCKBEakXEKbN9De7?g_st=it",
+            'Cote':"https://maps.app.goo.gl/X3iiymzHVHtbUJGs7?g_st=it",
         }
 
         function fetchQuestion() {
@@ -57,14 +75,11 @@
                     questionText = "What type of cuisine do you prefer?";
                     options = [
                         { value: "african", label: "African" },
-                        { value: "american", label: "American" },
+                        { value: "north_american", label: "North American" },
                         { value: "asian", label: "Asian" },
-                        { value: "chinese", label: "Chinese" },
-                        { value: "seafood", label: "Seafood" },
-                        { value: "healthy", label: "Healthy" },
-                        { value: "bakery", label: "Bakery" },
+                        { value: "south_american", label: "South American" },
                         { value: "mediterranean", label: "Mediterranean" },
-                        { value: "convenience", label: "Convenience" }
+                        { value: "european", label: "European" }
                     ];
                     break;
                 case "budget":
@@ -91,8 +106,8 @@
                     options = [
                         { value: "vegetarian", label: "Vegetarian" },
                         { value: "vegan", label: "Vegan" },
-                        { value: "gluten_free", label: "Gluten-free" },
-                        { value: "none", label: "No restrictions" }
+                        { value: "halal", label: "Halal" },
+                        { value: [], label: "No restrictions" }
                     ];
                     break;
                 case "restaurant_type":
@@ -110,10 +125,10 @@
                     ];
                     break;
                 case "appetite":
-                    questionText = "Are you looking for a full meal or light snacks?";
+                    questionText = "Are you looking for a full or light meal?";
                     options = [
                         { value: "full", label: "Full meal" },
-                        { value: "light", label: "Light snacks" }
+                        { value: "light", label: "Light meal" }
                     ];
                     break;
                 case "meal_type":
@@ -122,7 +137,6 @@
                         { value: "breakfast", label: "Breakfast" },
                         { value: "lunch", label: "Lunch" },
                         { value: "dinner", label: "Dinner" },
-                        { value: "snack", label: "Snack" }
                     ];
                     break;
             }
